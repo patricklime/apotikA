@@ -32,7 +32,7 @@ class MedicineSeeder extends Seeder
             'faskes1' => true,
             'faskes2' => true,
             'faskes3' => true,
-            'category_id' => 3 
+            'category_id' => 3
         ]);
 
         DB::table('medicines')->insert([
