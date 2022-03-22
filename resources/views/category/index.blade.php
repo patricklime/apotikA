@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Daftar Kategori</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+@extends('layout.conquer')
 
-  <style type='text/css'>
+  <!-- <style type='text/css'>
         .container{
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             grid-gap: 3rem;
             margin-top: 30px;
         }
         .card{
             background: #ccc;
-            height: 150px;
+            min-height: 270px;
             padding: 1rem;
             border-radius: 20px;
             text-decoration: none;
@@ -41,19 +33,71 @@
             font-size: 14px;
             margin-top: 10px;
         }
-  </style>
-</head>
-<body>
+       p{
+           text-align: center;
+       }
+  </style> -->
 
-<div class="container">
-   
+@section('content')
+<!-- <div class="container">
   @foreach($result as $d)
   <div class="card">
         <h4>{{$d->category_name}}</h4>
         <h6>{{$d->descriptions}}</h6>
+        <p>Contoh Obat:</p>
+        <div>
+       
+            @foreach($d->medicines as $m)
+                {{$m->name}} 
+                <ul>
+                    <li>Form : {{$m->form}}</li>
+                    <li>Price : {{$m->price}}</li>
+                </ul>
+
+            @endforeach
+        
+        </div>
     </div>
    @endforeach
-</div>
+</div> -->
 
-</body>
-</html>
+<div class="container" style='width: 100%;'>
+  <h2>Data Obat</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Kategori</th>
+        <th>Deskripsi</th>
+        <th>Contoh</th>
+        <th>formula</th>
+        <th>harga</th>
+      </tr>
+    </thead>
+    <tbody>
+    @php($num =1)
+    @foreach($result as $d)
+      <tr>
+        <td rowspan='{{count($d->medicines)}}'>{{$d->category_name}}</td>
+        <td rowspan='{{count($d->medicines)}}'>{{$d->descriptions}}</td>
+
+        @foreach($d->medicines as $m)
+
+            @if($num > 1)
+                <tr>
+            @endif
+           <td>{{$m->name}}</td>
+           <td>{{$m->form}}</td>
+           <td>{{$m->price}}</td>
+
+           @if($num > 1)
+                </tr>
+            @endif
+
+           @php($num++)
+        @endforeach
+        @php($num =1)
+        </tr>
+    @endforeach
+    </tbody>
+  </table>
+@endsection

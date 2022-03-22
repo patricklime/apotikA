@@ -15,7 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $result = DB::table('categories')->get();
+        //$result = DB::table('categories')->get();
+       
+         $result = Category::all();
+
         return view('category.index',compact('result'));
         
     }
@@ -85,4 +88,18 @@ class CategoryController extends Controller
     {
         //
     }
+
+    public function showlist($id_category)
+    {
+        $data = Category::find($id_category);
+        $nameCategory = $data->category_name;
+        $result = $data->medicines;
+        
+        if($result) $getTotalData = $result->count();
+        else $getTotalData = 0;
+        
+        return view('report.list_medicines_by_category', compact('id_category', 'nameCategory', 'result', 'getTotalData'));
+    
+    }
+
 }

@@ -1,40 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Daftar Obat</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+@extends('layout.conquer')
+
+@section('content')
 <div class="container">
-  <h2>Basic Table</h2>
-  <p>The table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nama</th>
-        <th>Bentuk</th>
-        <th>Formula</th>
-        <th>Harga</th>
-      </tr>
-    </thead>
-    <tbody>
-        @foreach($result as $d)
-      <tr>
-        <td>{{$d->name}}</td>
-        <td>{{$d->form}}</td>
-        <td>{{$d->restriction_formula}}</td>
-        <td>{{$d->price}}</td>
-      </tr>
+  <h2>Daftar Obat</h2>
+   <div class="row">
+      @foreach($result as $d)
+      <div class="col-md-3" style='text-align: center; border: 1px solid #999; margin:5px;
+              padding:5px; border-radius:10px; height: 270px;'>
+          <img src="{{asset('assets/images/'.$d->image) }}"
+           height="160px"><br>
+           <a href="/medicines/{{$d->id}}">
+              <b>{{$d->name}}</b> <br>
+              <p>{{$d->form}}</p>
+          </a>
+      </div>
       @endforeach
-      
-    </tbody>
-  </table>
+    </div>
 </div>
-
-
-</body>
-</html>
+@endsection

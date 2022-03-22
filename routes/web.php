@@ -18,4 +18,13 @@ Route::get('/', function () {
 });
 
 Route::resource('medicines','MedicineController');
+Route::get('coba1','MedicineController@coba1');
+
 Route::resource('categories','CategoryController');
+Route::get('report/listmedicine/{id}','CategoryController@showlist');
+
+Route::get('report/listExpensiveMedicine','MedicineController@showMaxMedicine');
+
+Route::get('/ceklayout', function () {
+    return view('layout.conquer');
+});
