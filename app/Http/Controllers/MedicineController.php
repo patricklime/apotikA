@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Medicine;
+use App\Category;
+use App\Supplier;
 use Illuminate\Http\Request;
 
 class MedicineController extends Controller
@@ -25,7 +27,7 @@ class MedicineController extends Controller
         // $result = Medicine::all();
         // dd($result);
 
-        return view('medicine.index',compact('result'));
+        return view('medicine.index', compact('result'));
 
     }
 
@@ -36,7 +38,10 @@ class MedicineController extends Controller
      */
     public function create()
     {
-        //
+        $data = Category::all();
+        $sup = Supplier::all();
+        
+        return view("medicine.create", compact('data','sup'));
     }
 
     /**
@@ -47,7 +52,28 @@ class MedicineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Medicine();
+        $data->name = $request->get('name');
+        $data->form = $request->get('form');
+        $data->restriction_formula = $request->get('formula');
+        $data->description = $request->get('description');
+        $data->price = $request->get('price');
+        
+        $image= $request->file('image');
+        $imageName = $image->getClientOriginalName();
+        $image->move('assets/images',$imageName);
+
+        $data->image = $imageName;
+
+        $data->faskes1 = isset($request->faskes1) ? 1:0;
+        $data->faskes2 = isset($request->faskes2) ? 1:0;
+        $data->faskes3 = isset($request->faskes3) ? 1:0;
+        $data->category_id = $request->kategori;
+        $data->idSupplier = $request->supplier;
+
+        $data->save();
+
+        return redirect()->route("medicine.index")->with("status", "Medicine is added!");
     }
 
     /**
@@ -147,4 +173,18 @@ class MedicineController extends Controller
         return view('report.list_expensive_medicine', compact('result'));
     
     }
+
+    public function showInfo()
+    {
+        $result=Medicine::orderBy('price','desc')->first();
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>"<div class='alert alert-danger'>
+                     Did you know? <br>
+                     Harga obat termahal adalah ".
+                     $result->generic_name . " ".$result->form . 
+                     " dengan harga " . $result->price
+          ),200); 
+    }
+
 }

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\Category;
+use App\Transaction;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //$result = DB::table('categories')->get();
-       
-         $result = Category::all();
-
-        return view('category.index',compact('result'));
-        
+        $result = Transaction::all();
+        return view('transaction.index', ['data'=>$result]);
     }
 
     /**
@@ -47,10 +43,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Transaction $transaction)
     {
         //
     }
@@ -58,10 +54,10 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Transaction $transaction)
     {
         //
     }
@@ -70,10 +66,10 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Transaction $transaction)
     {
         //
     }
@@ -81,39 +77,26 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Transaction $transaction)
     {
         //
     }
 
-    public function showlist($id_category)
+    public function showAjax(Request $request)
     {
-        $data = Category::find($id_category);
-        $nameCategory = $data->category_name;
-        $result = $data->medicines;
+        $myid = $request->myid;
+        $cat=Transaction::find($myid);
+        // $cat=Transaction::find($_POST['myid']);
+        $dataObat=$cat->medicines;
         
-        if($result) $getTotalData = $result->count();
-        else $getTotalData = 0;
-        
-        return view('report.list_medicines_by_category', compact('id_category', 'nameCategory', 'result', 'getTotalData'));
-    
-    }
-    
-    public function showProducts()
-    {
-        $cat=Category::find($_POST['category_id']);
-        $nama=$cat->category_name;
-        $data=$cat->medicines;
         return response()->json(array(
             'status'=>'oke',
             
-            'msg'=>view('category.showProducts',compact('nama','data'))->render()
+            'msg'=>view('transaction.showmodal',compact('cat','dataObat'))->render()
         ),200);
 
     }
-
 }
-

@@ -1,5 +1,24 @@
 @extends('layout.conquer')
 
+@section('javascript')
+<script>
+  function showProducts(category_id)
+  {
+    $.ajax({
+      type:'POST',
+      url:'{{route("category.showProducts")}}',
+      data:{'_token':'<?php echo csrf_token() ?>',
+        'category_id':category_id
+      },
+      success: function(data){
+        $('#showproducts').html(data.msg)
+      }
+    });
+  }
+</script>
+@endsection
+
+
   <!-- <style type='text/css'>
         .container{
             display: grid;
@@ -61,7 +80,7 @@
    @endforeach
 </div> -->
 
-<div class="container" style='width: 100%;'>
+<div class="container" style='width: 100%; cellspacing:0;'>
   <h2>Data Obat</h2>
   <table class="table">
     <thead>
@@ -71,6 +90,7 @@
         <th>Contoh</th>
         <th>formula</th>
         <th>harga</th>
+        <th>aksi</th>
       </tr>
     </thead>
     <tbody>
@@ -79,7 +99,11 @@
       <tr>
         <td rowspan='{{count($d->medicines)}}'>{{$d->category_name}}</td>
         <td rowspan='{{count($d->medicines)}}'>{{$d->descriptions}}</td>
-
+        <td rowspan='{{count($d->medicines)}}'>
+        <a class='btn btn-xs btn-info' data-toggle='modal' data-target='#myModal'
+   onclick="showProducts({{$d->id}})">
+   Detail</a>
+        </td>
         @foreach($d->medicines as $m)
 
             @if($num > 1)
@@ -90,14 +114,28 @@
            <td>{{$m->price}}</td>
 
            @if($num > 1)
-                </tr>
+               
+              </tr>
+                
             @endif
 
            @php($num++)
         @endforeach
+      
         @php($num =1)
+              
         </tr>
     @endforeach
+
     </tbody>
   </table>
 @endsection
+
+<div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
+  <div class="modal-dialog modal-wide">
+    <div class="modal-content" id="showproducts">
+      
+
+    </div>
+  </div>
+</div>

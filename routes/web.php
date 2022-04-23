@@ -28,3 +28,17 @@ Route::get('report/listExpensiveMedicine','MedicineController@showMaxMedicine');
 Route::get('/ceklayout', function () {
     return view('layout.conquer');
 });
+
+Route::post('/medicines/showInfo','MedicineController@showInfo')->name('medicines.showInfo');
+
+Route::post('/category/showProducts','CategoryController@showProducts')->name('category.showProducts');
+
+Route::resource('transaction','TransactionController');
+
+Route::post('transaction/showDetail','TransactionController@showAjax')->name('transaction.showAjax');
+
+Route::resource('supplier','SupplierController');
+
+Route::view('/','welcome')->name('supplier.index');
+
+Route::view('/','welcome')->name('medicine.index');

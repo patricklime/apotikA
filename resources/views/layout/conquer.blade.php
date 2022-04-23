@@ -47,6 +47,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
+
+@yield('javascript')
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -498,12 +500,20 @@ License: You must have a valid license purchased only from themeforest(the above
 							Medicines</a>
 						</li>
 						<li>
+							<a href="{{url('supplier')}}">
+							Suppliers</a>
+						</li>
+						<li>
 							<a href="/categories">
 							Categories</a>
 						</li>
 						<li>
 							<a href="/report/listExpensiveMedicine">
 							Reports</a>
+						</li>
+						<li>
+							<a href="/transaction">
+							Transactions</a>
 						</li>
 					</ul>
 				</li>
