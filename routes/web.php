@@ -38,7 +38,3 @@ Route::resource('transaction','TransactionController');
 Route::post('transaction/showDetail','TransactionController@showAjax')->name('transaction.showAjax');
 
 Route::resource('supplier','SupplierController');
-
-Route::view('/','welcome')->name('supplier.index');
-
-Route::view('/','welcome')->name('medicine.index');

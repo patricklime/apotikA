@@ -67,7 +67,9 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        //
+        $data = $supplier;
+        return view('supplier.edit', compact('data'));
+       
     }
 
     /**
@@ -79,7 +81,11 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        //
+        $supplier->name = $request->nama;
+        $supplier->address = $request->alamat;
+        $supplier->save();
+
+        return redirect()->route("supplier.index")->with("status", "Supplier is changed!");
     }
 
     /**
@@ -90,6 +96,14 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        try{
+            $supplier->delete();
+            return redirect()->route("supplier.index")->with("status", "Data supplier is deleted!");
+
+        }
+        catch(\PDOException $e){
+            $msg = "Failed to delete. Make sure data child has been deleted or foreign key not connected";
+            return redirect()->route('supplier.index')->with('error', $msg);
+        }
     }
 }

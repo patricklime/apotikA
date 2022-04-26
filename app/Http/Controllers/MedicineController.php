@@ -73,7 +73,7 @@ class MedicineController extends Controller
 
         $data->save();
 
-        return redirect()->route("medicine.index")->with("status", "Medicine is added!");
+        return redirect()->route("medicines.index")->with("status", "Medicine is added!");
     }
 
     /**
@@ -96,7 +96,12 @@ class MedicineController extends Controller
      */
     public function edit(Medicine $medicine)
     {
-        //
+        $cat = Category::all();
+        $sup = Supplier::all();
+
+        $data = $medicine;
+
+        return view('medicine.edit', compact('data','sup','cat'));
     }
 
     /**
@@ -108,7 +113,31 @@ class MedicineController extends Controller
      */
     public function update(Request $request, Medicine $medicine)
     {
-        //
+        $medicine->name = $request->name;
+        $medicine->form = $request->form;
+        $medicine->restriction_formula = $request->formula;
+        $medicine->description = $request->description;
+
+        $medicine->price = $request->price;
+       
+        $image= $request->file('image');
+
+        if(isset($image)){
+            $imageName = $image->getClientOriginalName();
+            $image->move('assets/images',$imageName);
+
+            $medicine->image = $imageName;
+        }
+       
+        $medicine->faskes1 = isset($request->faskes1) ? 1:0;
+        $medicine->faskes2 = isset($request->faskes2) ? 1:0;
+        $medicine->faskes3 = isset($request->faskes3) ? 1:0;
+        $medicine->category_id = $request->kategori;
+        $medicine->idSupplier = $request->supplier;
+
+        $medicine->save();
+
+        return redirect()->route("medicines.index")->with("status", "Medicine is changed!");
     }
 
     /**
@@ -119,7 +148,15 @@ class MedicineController extends Controller
      */
     public function destroy(Medicine $medicine)
     {
-        //
+        try{
+            $medicine->delete();
+            return redirect()->route("medicines.index")->with("status", "Data medicine is deleted!");
+
+        }
+        catch(\PDOException $e){
+            $msg = "Failed to delete. Make sure data child has been deleted or foreign key not connected";
+            return redirect()->route('medicines.index')->with('error', $msg);
+        }
     }
 
     public function coba1()
