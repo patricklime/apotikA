@@ -67,6 +67,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
+        //dd($supplier);
         $data = $supplier;
         return view('supplier.edit', compact('data'));
        

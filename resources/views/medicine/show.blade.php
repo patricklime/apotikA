@@ -6,12 +6,12 @@
   <h2>Data Obat</h2>
 
   <div>
-    <a href="{{url('medicines/'.$data->id.'/edit')}}" class="btn btn-xs btn-info">Edit</a><br><br>
+    <a href="{{url('medicines/'.$data->id.'/edit')}}" class="btn btn-xs btn-warning">Edit</a><br><br>
    
     <form method="post" action="{{url('medicines/'.$data->id)}}">
       @csrf
       @method("DELETE")
-      <input type="submit" value="delete" class="btn btn-xs btn-danger" onclick='if(!confirm("Are sure want to delete it?")) return false;'>
+      <input type="submit" value="delete" class="btn btn-xs btn-danger" onclick='if(!confirm("Are sure want to delete {{$data->name}}?")) return false;'>
     </form>
   </div><br>
 

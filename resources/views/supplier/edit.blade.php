@@ -8,7 +8,7 @@
 		<div class="form-body">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" name='nama' class="form-control input-lg" value="{{$data->name}}" placeholder="Enter Text">
+                <input type="text" name='nama' class="form-control input-lg" value="{{$data->name}}" placeholder="Enter Your Text">
             </div>
             <div class="form-group">
                 <label>Address</label>

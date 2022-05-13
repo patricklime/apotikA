@@ -48,13 +48,13 @@
       <tr>
         <td>{{$d->name}}</td>
         <td>{{$d->address}}</td>
-        <td><a href="{{url('supplier/'.$d->supplier_id.'/edit')}}" class="btn btn-xs btn-info">Edit</a></td>
+        <td><a href="{{url('supplier/'.$d->supplier_id.'/edit')}}" class="btn btn-xs btn-warning">Edit</a></td>
 
         <td>
           <form method="post" action="{{url('supplier/'.$d->supplier_id)}}">
             @csrf
             @method("DELETE")
-            <input type="submit" value="delete" class="btn btn-xs btn-danger" onclick='if(!confirm("Are sure want to delete it?")) return false;'>
+            <input type="submit" value="delete" class="btn btn-xs btn-danger" onclick='if(!confirm("Are sure want to delete {{$d->name}}?")) return false;'>
           </form>
         </td>
       </tr>
