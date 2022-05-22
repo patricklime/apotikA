@@ -107,4 +107,67 @@ class SupplierController extends Controller
             return redirect()->route('supplier.index')->with('error', $msg);
         }
     }
+
+    public function getEditForm(Request $request)
+    {
+        $id = $request->myid;
+        $data = Supplier::find($id);
+
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('supplier.getEditForm', compact('data'))->render() 
+        ), 200);
+    }
+
+    public function getEditForm2(Request $request)
+    {
+        $id = $request->myid;
+        $data = Supplier::find($id);
+
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('supplier.getEditForm2', compact('data'))->render() 
+        ), 200);
+    }
+
+    public function saveData(Request $request)
+    {
+        $id = $request->myid;
+        $data = Supplier::find($id);
+
+        $data->name = $request->myname;
+        $data->address = $request->myaddress;
+
+        $data->save();
+
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>'Supplier updated'
+        ), 200);
+    }
+
+    public function deleteData(Request $request)
+    {
+        try{
+            $id = $request->myid;
+            $supplier = Supplier::find($id);
+
+            $supplier->delete();
+
+            return response()->json(array(
+                'status'=>'oke',
+                'msg'=>'Data supplier is deleted!'
+            ), 200);
+
+        }
+        catch(\PDOException $e){
+            $msg = "Failed to delete. Make sure data child has been deleted or foreign key not connected";
+
+            return response()->json(array(
+                'status'=>'oke',
+                'msg'=>$msg
+            ), 200);
+
+        }
+    }
 }

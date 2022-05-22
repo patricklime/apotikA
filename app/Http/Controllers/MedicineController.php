@@ -22,12 +22,14 @@ class MedicineController extends Controller
         // dd($result);
 //query builder
         $result = DB::table('medicines')->get();
+        $sup = Supplier::all();
+        $cat = Category::all();
         // dd($result);
 //query orm
         // $result = Medicine::all();
         // dd($result);
 
-        return view('medicine.index', compact('result'));
+        return view('medicine.index', compact('result', 'sup', 'cat'));
 
     }
 
@@ -222,6 +224,92 @@ class MedicineController extends Controller
                      $result->generic_name . " ".$result->form . 
                      " dengan harga " . $result->price
           ),200); 
+    }
+
+    public function getEditForm(Request $request)
+    {
+        $id = $request->myid;
+        $data = Medicine::find($id);
+        $cat = Category::all();
+        $sup = Supplier::all();
+
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('medicine.getEditForm', compact('data','cat','sup'))->render() 
+        ), 200);
+    }
+
+    public function getEditForm2(Request $request)
+    {
+        $id = $request->myid;
+        $data = Medicine::find($id);
+        $cat = Category::all();
+        $sup = Supplier::all();
+
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('medicine.getEditForm2', compact('data','sup','cat'))->render() 
+        ), 200);
+    }
+
+    public function saveData(Request $request)
+    {
+        $id = $request->myid;
+        $data = Medicine::find($id);
+
+        $data->name = $request->myname;
+        $data->form = $request->myform;
+        $data->restriction_formula = $request->myformula;
+        $data->description = $request->mydesk;
+        $data->price = $request->myharga;
+
+        $image= $request->myfoto;
+      
+        if($image != null){
+           
+            $data->image = $image;
+        }
+
+        $data->faskes1 = $request->myfaskes1;
+        $data->faskes2 = $request->myfaskes2;
+        $data->faskes3 = $request->myfaskes3;
+        $data->category_id = $request->mycategory;
+        $data->idSupplier = $request->mysup;
+
+        $data->save();
+
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>'Medicine updated',
+            'kat'=>$data->category->category_name,
+            'img'=>$data->image
+            
+        ), 200);
+    }
+
+    public function deleteData(Request $request)
+    {
+        try{
+            $id = $request->myid;
+            $medicine = Medicine::find($id);
+
+            $medicine->delete();
+
+            return response()->json(array(
+                'status'=>'oke',
+                'msg'=>'Data medicine is deleted!'
+            ), 200);
+
+        }
+        catch(\PDOException $e){
+            $msg = "Failed to delete. Make sure data child has been deleted or foreign key not connected";
+
+            return response()->json(array(
+                'status'=>'oke',
+                'msg'=>$msg
+            ), 200);
+
+        }
     }
 
 }
