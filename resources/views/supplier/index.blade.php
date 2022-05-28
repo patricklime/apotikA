@@ -140,11 +140,13 @@
           <td><a href="#modalEdit" data-toggle='modal' class="btn btn-xs btn-info" onclick="getEditForm2({{$d->supplier_id}})">+ Edit (B)</a></td>
 
           <td>
+            @can('delete-permission',$d)
             <form method="post" action="{{url('supplier/'.$d->supplier_id)}}">
               @csrf
               @method("DELETE")
               <input type="submit" value="delete" class="btn btn-xs btn-danger" onclick='if(!confirm("Are sure want to delete {{$d->name}}?")) return false;'>
             </form>
+            @endcan
           </td>
 
           <td>

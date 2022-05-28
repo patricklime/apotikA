@@ -17,10 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('medicines','MedicineController');
 Route::get('coba1','MedicineController@coba1');
 
-Route::resource('categories','CategoryController');
+Route::resource('categories','CategoryController')->middleware(['auth']);
 Route::get('report/listmedicine/{id}','CategoryController@showlist');
 
 Route::get('report/listExpensiveMedicine','MedicineController@showMaxMedicine');
@@ -33,24 +32,36 @@ Route::post('/medicines/showInfo','MedicineController@showInfo')->name('medicine
 
 Route::post('/category/showProducts','CategoryController@showProducts')->name('category.showProducts');
 
-Route::resource('transaction','TransactionController');
+Route::middleware(['auth'])->group(function(){
+    Route::resource('transaction','TransactionController');
 
-Route::post('transaction/showDetail','TransactionController@showAjax')->name('transaction.showAjax');
+    Route::post('transaction/showDetail','TransactionController@showAjax')->name('transaction.showAjax');
+});
 
-Route::resource('supplier','SupplierController');
+Route::middleware(['auth'])->group(function(){
+    Route::resource('supplier','SupplierController');
 
-Route::post('supplier/getEditForm','SupplierController@getEditForm')->name('supplier.getEditForm');
+    Route::post('supplier/getEditForm','SupplierController@getEditForm')->name('supplier.getEditForm');
+    
+    Route::post('supplier/getEditForm2','SupplierController@getEditForm2')->name('supplier.getEditForm2');
+    
+    Route::post('supplier/saveData','SupplierController@saveData')->name('supplier.saveData');
+    
+    Route::post('supplier/deleteData','SupplierController@deleteData')->name('supplier.deleteData');
+    
+});
+Route::middleware(['auth'])->group(function(){
+    Route::resource('medicines','MedicineController');
 
-Route::post('supplier/getEditForm2','SupplierController@getEditForm2')->name('supplier.getEditForm2');
+    Route::post('medicines/getEditForm','MedicineController@getEditForm')->name('medicines.getEditForm');
 
-Route::post('supplier/saveData','SupplierController@saveData')->name('supplier.saveData');
+    Route::post('medicines/getEditForm2','MedicineController@getEditForm2')->name('medicines.getEditForm2');
 
-Route::post('supplier/deleteData','SupplierController@deleteData')->name('supplier.deleteData');
+    Route::post('medicines/saveData','MedicineController@saveData')->name('medicines.saveData');
 
-Route::post('medicines/getEditForm','MedicineController@getEditForm')->name('medicines.getEditForm');
+    Route::post('medicines/deleteData','MedicineController@deleteData')->name('medicines.deleteData');
+});
 
-Route::post('medicines/getEditForm2','MedicineController@getEditForm2')->name('medicines.getEditForm2');
+Auth::routes();
 
-Route::post('medicines/saveData','MedicineController@saveData')->name('medicines.saveData');
-
-Route::post('medicines/deleteData','MedicineController@deleteData')->name('medicines.deleteData');
+Route::get('/home', 'HomeController@index')->name('home');

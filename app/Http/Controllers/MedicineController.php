@@ -150,6 +150,8 @@ class MedicineController extends Controller
      */
     public function destroy(Medicine $medicine)
     {
+        $this->authorize('delete-permission-medicines', $medicine);
+
         try{
             $medicine->delete();
             return redirect()->route("medicines.index")->with("status", "Data medicine is deleted!");

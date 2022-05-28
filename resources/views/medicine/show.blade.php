@@ -119,12 +119,15 @@
   <h2>Data Obat</h2>
 
   <div>
+    @can('edit-permission-medicines',$data)
     <a href="{{url('medicines/'.$data->id.'/edit')}}" class="btn btn-xs btn-warning">Edit</a>
 
     <a href="#modalEdit" data-toggle='modal' class="btn btn-xs btn-info" onclick="getEditForm({{$data->id}})">+ Edit (A)</a>
           
     <a href="#modalEdit" data-toggle='modal' class="btn btn-xs btn-info" onclick="getEditForm2({{$data->id}})">+ Edit (B)</a><br><br>
-   
+    @endcan
+
+    @can('delete-permission-medicines',$data)
     <form method="post" action="{{url('medicines/'.$data->id)}}">
       @csrf
       @method("DELETE")
@@ -132,6 +135,7 @@
     </form><br>
 
     <a class="btn btn-xs btn-danger" onclick='if(confirm("Are sure want to delete {{$data->name}}?")) deleteDataRemoveTR({{$data->id}})' >Delete 2</a>
+    @endcan
 
   </div><br>
 
