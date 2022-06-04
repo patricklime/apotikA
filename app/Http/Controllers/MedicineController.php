@@ -314,4 +314,33 @@ class MedicineController extends Controller
         }
     }
 
+    public function front_index(){
+        $pro = Medicine::all();
+        return view('fronted.product', compact('pro'));
+    }
+
+    public function addToCart($id){
+        $p = Medicine::find($id);
+        $cart = session()->get('cart');
+       
+        if(!isset($cart[$id])){
+            $cart[$id] = [
+                "name"=>$p->name,
+                "quantity"=>1,
+                "price"=>$p->price,
+                "photo"=>$p->image 
+            ];
+        }
+        else{
+            $cart[$id]['quantity']++;
+        }
+
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product ' . $cart[$id]['name'] . " jumlah " . $cart[$id]['quantity']);
+    }
+
+    public function cart(){
+        return view('fronted.cart');
+    }
+
 }

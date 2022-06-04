@@ -65,3 +65,11 @@ Route::middleware(['auth'])->group(function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/','MedicineController@front_index');
+
+Route::get('/cart','MedicineController@cart');
+
+Route::get('/add-to-cart/{id}','MedicineController@addToCart');
+
+Route::get('checkout','MedicineController@checkout')->middleware('auth');

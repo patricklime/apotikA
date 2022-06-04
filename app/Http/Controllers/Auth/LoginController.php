@@ -27,7 +27,30 @@ class LoginController extends Controller
      * @var string
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo = "/";
+    // protected $redirectTo = "/";
+    
+    public function redirectTo()
+    {
+        $role=Auth::user()->sebagai;
+        switch ($role)
+        {
+            case 'owner':
+                return "/supplier";
+                break;
+
+            case 'pegawai':
+                    return "/medicines";
+                    break;
+            case 'member':
+                    return "/";
+                    break;
+            default:
+                return '/home';
+                break;
+
+        }
+    }
+
     /**
      * Create a new controller instance.
      *
