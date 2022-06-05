@@ -71,17 +71,17 @@
         </nav>
     <div class="row">
         <div class="col-lg-12 col-sm-12 col-12 main-section">
-            <div class="dropdown">
+            <div class="dropdown">     
                     
-                    @if(session('cart'))
-                        <?php 
-                            $jum=0;
-                            $total=0;  
-                        ?>
                 <button type="button" class="btn btn-info" data-toggle="dropdown">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
                 </button>
                 
+                @if(session('cart'))
+                        <?php 
+                            $jum=0;
+                            $total=0;  
+                        ?>
                 <div class="dropdown-menu">
 
                     @foreach(session('cart') as $id => $details)
@@ -111,13 +111,14 @@
                             <p>Total: <span id='tot' class="text-info">Rp {{number_format($total,0,',','.')}}</span></p>
                         </div>
                     </div>
-                    @endif
+                   
                    
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
                             <a href="{{ url('cart') }}" class="btn btn-primary btn-block">View all</a>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

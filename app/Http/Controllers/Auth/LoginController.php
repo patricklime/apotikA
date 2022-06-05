@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -42,7 +44,7 @@ class LoginController extends Controller
                     return "/medicines";
                     break;
             case 'member':
-                    return "/";
+                    return "/product";
                     break;
             default:
                 return '/home';

@@ -30,8 +30,8 @@
 
                             <div class="col-md-6">
                                 <input type="radio" name="roles" value="owner">Pemilik<br>
-                                <input type="radio" name="roles" value="pegawai">Karyawan
-                                
+                                <input type="radio" name="roles" value="pegawai">Karyawan<br>
+                                <input type="radio" name="roles" value="member">Member
                             </div>
                         </div>
 

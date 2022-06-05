@@ -31,7 +31,7 @@
 
             <td data-th="Product">
                 <div class="row">
-                    <div class="col-sm-3 hidden-xs"><img height='50px' src="{{asset('images/'.$details['photo'])}}" alt="..." class="img-responsive"/></div>
+                    <div class="col-sm-3 hidden-xs"><img height='50px' src="{{asset('assets/images/'.$details['photo'])}}" alt="..." class="img-responsive"/></div>
                     <div class="col-sm-9">
                         <h4 class="nomargin">{{$details['name']}}</h4>
                      </div>
@@ -48,10 +48,14 @@
         </tbody>
         <tfoot>
         <tr class="visible-xs">
-            <td colspan='2' style="text-align:right">Total : </td>
-            
-            <td class="text-center"><strong>{{$jum}}</strong></td>
+            <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+             
+            <td class="hidden-xs"><a href="{{ route('submitcheckout') }}" class="btn btn-danger"><i class="fa fa-angle-right"></i> finish</a></td>
+           
+            <td colspan='1' style="text-align:right">Total : </td>
+          
             <td class="text-center"><strong>{{$tot}}</strong></td>
+
         </tr>
        
         </tfoot>

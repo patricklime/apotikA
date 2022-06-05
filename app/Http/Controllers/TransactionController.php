@@ -99,4 +99,27 @@ class TransactionController extends Controller
         ),200);
 
     }
+
+    public function form_submit_front(){
+        $this->authorize('checkmember');
+        return view('fronted.checkout');
+    }
+
+    public function submit_front(){
+        $this->authorize('checkmember');
+     
+        $cart = session()->get('cart');
+        $user = Auth::user();
+        $t = new Transaction;
+        $t->pembeli_id = $user_id;
+        $t->transaction_date = Carbon::now()->toDateTimeString();
+        $t->save();
+
+        $totalHarga = $t->insertProduct($cart, $user);
+        $t->total = $totalHarga;
+        $t->save();
+
+        session()->forget('cart');
+        return redirect("home");
+    }
 }

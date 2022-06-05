@@ -454,12 +454,14 @@ License: You must have a valid license purchased only from themeforest(the above
 					</li>
 					<li class="divider">
 					</li>
+					@if(Auth::user())
 					<li>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
 							@csrf
 						<i class="fa fa-key"></i><input class="btn btn-danger" type="submit" value="Log Out">
 						</form>
 					</li>
+					@endif
 				</ul>
 			</li>
 			<!-- END USER LOGIN DROPDOWN -->
